@@ -12,7 +12,7 @@ alias oo="open ."
 alias e="$EDITOR"
 alias g="git"
 alias v="vim"
-alias gh="github"
+#alias gh="github"
 alias rm="trash"
 alias x+="chmod +x"
 alias -- +x="chmod +x"
@@ -114,7 +114,8 @@ function git_list_branches() {
 # Git aliases
 # More Git tips http://firstaidgit.io/
 alias gss="git status -s"
-alias gp="git push origin HEAD"
+alias gp="git push"
+alias gpf="git push -f"
 alias gpt="git push origin HEAD && git push --tags"
 alias wip="git commit -m'WIP' . && git push origin HEAD"
 alias grok="ngrok start rem.jsbin-dev.com static.rem.jsbin-dev.com learn.rem.jsbin-dev.com"
@@ -128,6 +129,7 @@ alias gm='git commit -m'
 alias gam='git commit -am'
 alias gb='git branch'
 alias gc='git checkout'
+alias ghc='gh pr checkout'
 alias gra='git remote add'
 alias grr='git remote rm'
 alias gbt=git_list_branches
@@ -144,6 +146,7 @@ alias gst='git stash' # stash git changes and put them into your list
 alias gdtp='git stash pop' # bring back your changes, but it removes them from your stash
 alias gchp='git cherry-pick' # cherry pick the committed code in your own branch (gchp [hash])
 alias gcln='git clean -xfd' # remove untracked files
+alias gdlb='git branch -vv --no-color | grep "origin/.*: gone].*" | awk "{print \$1}" | xargs git branch -D' # Delete local branches that have been deleted on remote
 
 # Undo a `git push`
 alias undopush="git push -f origin HEAD^:master"
@@ -203,3 +206,27 @@ alias update_brew_npm_gem='brew_update; npm install npm -g; npm update -g; sudo 
 for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
   alias "$method"="lwp-request -m '$method'"
 done
+
+# Development stuff
+alias nuxtlocal='NODE_ENV=local NOW_CONFIG=../now.local.json nuxt dev'
+alias art='php artisan'
+
+# SSH Hosts
+alias ssh-dev='ssh deploy@dev1.rivalry.gg'
+alias ssh-devroot='ssh ubuntu@dev1.rivalry.gg'
+alias ssh-prod10='ssh deploy@prod10.rivalry.gg'
+
+
+# Frontend build commands.
+# app* are used for frontend app/admin
+# rushlane/crm* are used for any other frontend project
+# In the future these will be made into one set of commands, when we rip out admin
+alias appdev='NODE_ENV=local NOW_CONFIG=../now.local.json nuxt dev' # rivalry-app dev
+alias appbuild='NODE_ENV=local NOW_CONFIG=../now.local.json nuxt build'
+alias appstart='NODE_ENV=local NOW_CONFIG=../now.local.json nuxt start'
+alias rushlanedev='NODE_ENV=local NOW_CONFIG=./now.local.json nuxt dev' # rivalry-crm dev
+alias rushlanebuild='NODE_ENV=local NOW_CONFIG=./now.local.json nuxt build'
+alias rushlanestart='NODE_ENV=local NOW_CONFIG=./now.local.json nuxt start'
+alias crmdev='NODE_ENV=local NOW_CONFIG=./now.local.json nuxt dev' # rivalry-crm dev
+alias crmbuild='NODE_ENV=local NOW_CONFIG=./now.local.json nuxt build'
+alias crmstart='NODE_ENV=local NOW_CONFIG=./now.local.json nuxt start'

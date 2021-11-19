@@ -1,39 +1,37 @@
 #!/bin/bash
 
-# Install Caskroom
-brew cask
-brew tap homebrew/cask-drivers
+# Add alternate version casks
+brew tap homebrew/cask-versions
 
 # Install packages
 apps=(
     dropbox
-    dash
-    #imagealpha
-    imageoptim
     iterm2
-    atom
     firefox
     google-chrome
     opera
-    #malwarebytes-anti-malware
-    #kaleidoscope
-    macdown
     spotify
     skype
     slack
-    zoomus
+    discord
+    zoom
+    tuple
     steam
     sonos
-    postman
+    sonos-s1-controller
+    insomnia
+    monodraw
     sequel-pro
+    tableplus
     sketch
     backblaze
     sublime-text
     microsoft-office
     visual-studio-code
+    whatsapp
 )
 
-brew cask install "${apps[@]}"
+brew install "${apps[@]}"
 
 # Quick Look Plugins (https://github.com/sindresorhus/quick-look-plugins)
 #brew cask install qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv betterzipql qlimagesize webpquicklook

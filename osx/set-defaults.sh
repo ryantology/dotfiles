@@ -1,19 +1,18 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-#
-# Reasonably sets OS X defaults. My sources:
-#  - https://github.com/skwp/dotfiles/blob/master/bin/osx
-#  - https://github.com/mathiasbynens/dotfiles/blob/master/.osx
-# ~/dotfiles/osx/set-defaults.sh — http://mths.be/osx
-#
+# ~/.macos — https://mths.be/macos
+
+# Close any open System Preferences panes, to prevent them from overriding
+# settings we’re about to change
+osascript -e 'tell application "System Preferences" to quit'
+
+# Ask for the administrator password upfront
+sudo -v
 
 # Set computer name
 COMPUTERNAME="Ryantology MBP"
 HOSTNAME='mbp'
 LOCALHOSTNAME='mbp'
-
-# Ask for the administrator password upfront
-sudo -v
 
 # Keep-alive: update existing `sudo` time stamp until `.osx` has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
@@ -28,14 +27,41 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 #sudo scutil --set LocalHostName $LOCALHOSTNAME
 #sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string $LOCALHOSTNAME
 
-# Disable smart quotes as they’re annoying when typing code
-defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+# Always show scrollbars
+defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
+# Possible values: `WhenScrolling`, `Automatic` and `Always`
+
+# Expand save panel by default
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
+
+# Expand print panel by default
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
+
+# Save to disk (not to iCloud) by default
+defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+
+# Disable automatic capitalization as it’s annoying when typing code
+defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
 
 # Disable smart dashes as they’re annoying when typing code
 defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 
-# Stop iTunes from responding to the keyboard media keys
-launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
+# Disable automatic period substitution as it’s annoying when typing code
+defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+
+# Disable smart quotes as they’re annoying when typing code
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+
+###############################################################################
+# Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
+###############################################################################
+
+# Set a blazingly fast keyboard repeat rate
+defaults write NSGlobalDomain KeyRepeat -int 1
+defaults write NSGlobalDomain InitialKeyRepeat -int 15
+
 
 ###############################################################################
 # Apple software: Safari, Updater, iTunes, etc.                               #
@@ -92,45 +118,6 @@ done
 # Prevent Photos from opening automatically when devices are plugged in
 defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
 
-###############################################################################
-# Activity Monitor                                                            #
-###############################################################################
-
-# Show the main window when launching Activity Monitor
-defaults write com.apple.ActivityMonitor OpenMainWindow -bool true
-
-# Visualize CPU usage in the Activity Monitor Dock icon
-defaults write com.apple.ActivityMonitor IconType -int 5
-
-# Show all processes in Activity Monitor
-defaults write com.apple.ActivityMonitor ShowCategory -int 0
-
-# Sort Activity Monitor results by CPU usage
-defaults write com.apple.ActivityMonitor SortColumn -string "CPUUsage"
-defaults write com.apple.ActivityMonitor SortDirection -int 0
-
-###############################################################################
-# Interfaces: trackpad, mouse, keyboard, bluetooth, etc.
-###############################################################################
-
-# Map bottom right corner of Apple trackpad to right-click.
-# defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 2
-# defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
-# defaults -currentHost write -g com.apple.trackpad.trackpadCornerClickBehavior -int 1
-# defaults -currentHost write com.apple.trackpad.enableSecondaryClick -bool true
-
-# Set a really fast keyboard repeat rate.
-defaults write -g KeyRepeat -int 1
-defaults write -g InitialKeyRepeat -int 15
-
-# Disable press-and-hold for keys in favor of key repeat.
-defaults write -g ApplePressAndHoldEnabled -bool false
-
-# Set language and text formats. (USD and Imperial Units)
-# defaults write -g AppleLanguages -array "en" "nl"
-# defaults write -g AppleLocale -string "en_US@currency=USD"
-# defaults write -g AppleMeasurementUnits -string "Inches"
-# defaults write -g AppleMetricUnits -bool false
 
 ###############################################################################
 # Screen
@@ -162,16 +149,6 @@ defaults write com.apple.screensaver askForPasswordDelay -int 2
 
 # Enable sub-pixel rendering on non-Apple LCDs.
 # defaults write NSGlobalDomain AppleFontSmoothing -int 2
-
-# Disable and kill Dashboard
-# Can be reverted with:
-# defaults write com.apple.dashboard mcx-disabled -boolean NO; killall Doc
-defaults write com.apple.dashboard mcx-disabled -boolean YES; killall Dock
-
-# Disable icons on the Desktop
-# This will "hide" all the files on the Desktop, but one can still access
-# the files through Finder. Makes things look pretty.
-defaults write com.apple.finder CreateDesktop -bool false && killall Finder
 
 ###############################################################################
 # Finder

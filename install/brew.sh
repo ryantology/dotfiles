@@ -9,8 +9,11 @@ sudo -v
 if test ! $(which brew)
 then
   echo "Installing Homebrew..."
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
+
+# Add extra taps
+brew tap jzaleski/homebrew-jzaleski
 
 # Make sure we’re using the latest Homebrew
 brew update
@@ -40,6 +43,7 @@ brew upgrade
 # which version I'm using.
 
 apps=(
+    apg
     node
     ansible
     bash-completion2
@@ -47,13 +51,10 @@ apps=(
     moreutils
     findutils
     fortune
-    #gnu-sed --with-default-names
-    #grep --with-default-names
     mtr
     autojump
     imagemagick
     source-highlight
-    #the_silver_searcher
     tree
     ffmpeg
     wget
