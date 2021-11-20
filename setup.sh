@@ -250,7 +250,6 @@ main() {
     'crlf'
     'dups'
     'git-delete-merged-branches'
-    'nyan'
     'passive'
     'proofread'
     'ssh-key'
@@ -312,7 +311,7 @@ install_zsh () {
 }
 
 # Package managers & packages
-# These have already been run.
+# These should be run by setup-new-machine.sh.
 # . "$DOTFILES_DIR/install/brew.sh"
 # . "$DOTFILES_DIR/install/npm.sh"
 

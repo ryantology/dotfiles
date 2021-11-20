@@ -12,8 +12,6 @@ alias oo="open ."
 alias e="$EDITOR"
 alias g="git"
 alias v="vim"
-#alias gh="github"
-alias rm="trash"
 alias x+="chmod +x"
 alias -- +x="chmod +x"
 
@@ -208,25 +206,4 @@ for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
 done
 
 # Development stuff
-alias nuxtlocal='NODE_ENV=local NOW_CONFIG=../now.local.json nuxt dev'
 alias art='php artisan'
-
-# SSH Hosts
-alias ssh-dev='ssh deploy@dev1.rivalry.gg'
-alias ssh-devroot='ssh ubuntu@dev1.rivalry.gg'
-alias ssh-prod10='ssh deploy@prod10.rivalry.gg'
-
-
-# Frontend build commands.
-# app* are used for frontend app/admin
-# rushlane/crm* are used for any other frontend project
-# In the future these will be made into one set of commands, when we rip out admin
-alias appdev='NODE_ENV=local NOW_CONFIG=../now.local.json nuxt dev' # rivalry-app dev
-alias appbuild='NODE_ENV=local NOW_CONFIG=../now.local.json nuxt build'
-alias appstart='NODE_ENV=local NOW_CONFIG=../now.local.json nuxt start'
-alias rushlanedev='NODE_ENV=local NOW_CONFIG=./now.local.json nuxt dev' # rivalry-crm dev
-alias rushlanebuild='NODE_ENV=local NOW_CONFIG=./now.local.json nuxt build'
-alias rushlanestart='NODE_ENV=local NOW_CONFIG=./now.local.json nuxt start'
-alias crmdev='NODE_ENV=local NOW_CONFIG=./now.local.json nuxt dev' # rivalry-crm dev
-alias crmbuild='NODE_ENV=local NOW_CONFIG=./now.local.json nuxt build'
-alias crmstart='NODE_ENV=local NOW_CONFIG=./now.local.json nuxt start'
