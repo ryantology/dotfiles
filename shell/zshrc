@@ -4,15 +4,19 @@ export ZSH=$HOME/.oh-my-zsh
 # Directories to be prepended to $PATH
 declare -a dirs_to_prepend
 dirs_to_prepend=(
+  "/opt/homebrew/bin"
+  "/opt/homebrew/sbin"
   "$HOME/dotfiles/bin"
   "$HOME/bin"
   "$HOME/.rvm/bin"
+  "$HOME/.composer/vendor/bin"
+  "/usr/local/opt/gettext/bin"
+  "/opt/homebrew/opt/php@7.4/bin"
+  "/opt/homebrew/opt/php@7.4/sbin"
   # "/usr/local/opt/mysql@5.7/bin" # Upgrade to 8.0
   # "$(brew --prefix coreutils)/libexec/gnubin" # Add brew-installed GNU core utilities bin
   # "$(brew --prefix)/share/npm/bin" # Add npm-installed package bin
-  "$HOME/.composer/vendor/bin"
   # "$(brew --prefix homebrew/core/php)/bin"
-  "/usr/local/opt/gettext/bin"
 )
 
 # Explicitly configured $PATH

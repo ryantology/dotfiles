@@ -2,13 +2,16 @@
 
 # Add alternate version casks
 brew tap homebrew/cask-versions
+brew tap homebrew/cask-drivers
 
 # Install packages
 apps=(
     dropbox
+    1password
     iterm2
     firefox
     google-chrome
+    google-drive
     opera
     spotify
     skype
