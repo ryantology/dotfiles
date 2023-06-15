@@ -1,0 +1,8 @@
+#########################################
+# Edit these variables before continue
+export PROJECT_BACKEND="$HOME/Projects/rivalry"
+export PROJECT_FRONTEND="$HOME/Projects/rivalry-app"
+export PROJECT_PINNACLE="$HOME/Projects/node-pinnacle"
+export PROJECT_BACKOFFICE="$HOME/Projects/rivalry-backoffice"
+export GITHUB_PAT=""
+#####################################################

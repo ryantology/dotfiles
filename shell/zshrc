@@ -6,13 +6,14 @@ declare -a dirs_to_prepend
 dirs_to_prepend=(
   "/opt/homebrew/bin"
   "/opt/homebrew/sbin"
+  "/opt/homebrew/Cellar/mysql-client/8.0.29/bin"
   "$HOME/dotfiles/bin"
   "$HOME/bin"
   "$HOME/.rvm/bin"
   "$HOME/.composer/vendor/bin"
   "/usr/local/opt/gettext/bin"
-  "/opt/homebrew/opt/php@7.4/bin"
-  "/opt/homebrew/opt/php@7.4/sbin"
+  "/opt/homebrew/opt/php@8.1/bin"
+  "/opt/homebrew/opt/php@8.1/sbin"
   # "/usr/local/opt/mysql@5.7/bin" # Upgrade to 8.0
   # "$(brew --prefix coreutils)/libexec/gnubin" # Add brew-installed GNU core utilities bin
   # "$(brew --prefix)/share/npm/bin" # Add npm-installed package bin
@@ -75,7 +76,7 @@ plugins=(brew node npm history git)
 # User configuration
 
 # Load the shell dotfiles
-for file in $HOME/.{shell_exports,shell_aliases,shell_functions,shell_config}; do
+for file in $HOME/.{shell_exports,shell_aliases,shell_functions,shell_config,docker_local}; do
   [ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;
