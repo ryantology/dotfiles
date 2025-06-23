@@ -90,21 +90,6 @@ $HOME/dotfiles/install/brew-cask.sh
 
 #$HOME/dotfiles/install/npm.sh
 
-# Type `git open` to open the GitHub page or website for a repository.
-npm install -g git-open
-# trash as the safe `rm` alternative
-npm install -g trash-cli
-
-
-###############################################################################
-# Git                                                                         #
-###############################################################################
-
-# github.com/jamiew/git-friendly
-# the `push` command which copies the github compare URL to my clipboard is heaven
-bash < <( curl https://raw.github.com/jamiew/git-friendly/master/install.sh)
-
-
 ###############################################################################
 # Z                                                                           #
 ###############################################################################
@@ -126,14 +111,6 @@ chmod +x ~/z/z.sh
 
 # for the c alias (syntax highlighted cat)
 sudo easy_install Pygments
-
-
-###############################################################################
-# Atom                                                                        #
-###############################################################################
-
-ln -s /Applications/Atom.app/Contents/Resources/app/atom.sh /usr/local/bin/atom
-
 
 ###############################################################################
 # OSX defaults                                                                #

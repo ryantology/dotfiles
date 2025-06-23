@@ -2,4 +2,4 @@
 node_modules
 chrome
 gitconfig.local
-docker-local
+shell/docker-local

@@ -6,14 +6,18 @@ declare -a dirs_to_prepend
 dirs_to_prepend=(
   "/opt/homebrew/bin"
   "/opt/homebrew/sbin"
-  "/opt/homebrew/Cellar/mysql-client/8.0.29/bin"
+  # "/opt/homebrew/Cellar/mysql-client/8.0.29/bin"
   "$HOME/dotfiles/bin"
   "$HOME/bin"
-  "$HOME/.rvm/bin"
-  "$HOME/.composer/vendor/bin"
-  "/usr/local/opt/gettext/bin"
-  "/opt/homebrew/opt/php@8.1/bin"
-  "/opt/homebrew/opt/php@8.1/sbin"
+  # "$HOME/.composer/vendor/bin"
+  # "/usr/local/opt/gettext/bin"
+  # "/opt/homebrew/opt/php@8.2/bin"
+  # "/opt/homebrew/opt/php@8.2/sbin"
+  # "/opt/homebrew/opt/node@22/bin"
+  "/Users/ryanw/.local/bin"
+  "/Users/ryanw/.codeium/windsurf/bin"
+  "/System/Cryptexes/App/usr/bin" # Safaridriver for running REST API tests
+  "/Applications/iTerm.app/Contents/Resources/utilities" # iTerm2
   # "/usr/local/opt/mysql@5.7/bin" # Upgrade to 8.0
   # "$(brew --prefix coreutils)/libexec/gnubin" # Add brew-installed GNU core utilities bin
   # "$(brew --prefix)/share/npm/bin" # Add npm-installed package bin
@@ -21,8 +25,7 @@ dirs_to_prepend=(
 )
 
 # Explicitly configured $PATH
-PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
-
+PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin"
 for dir in ${(k)dirs_to_prepend[@]}
 do
   if [ -d ${dir} ]; then
@@ -103,3 +106,16 @@ source $ZSH/oh-my-zsh.sh
 
 # fortune: brew install fortune ponysay
 # fortune
+
+
+# ####################################################
+# Utilities function
+function setup-host {
+  { grep -v "MYIP" /etc/hosts; echo "$(get-local-ip) redis mysql games-redis games-mysql MYIP"; } > /tmp/hosts && sudo mv /tmp/hosts /etc/hosts
+}
+
+function get-local-ip {
+  ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | head -n 1
+}
+
+export MYIP=$(get-local-ip)

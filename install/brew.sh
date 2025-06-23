@@ -13,6 +13,7 @@ then
 fi
 
 # Add extra taps
+# This is the upstream maintained version of APG
 brew tap jzaleski/homebrew-jzaleski
 
 # Make sure we’re using the latest Homebrew
@@ -23,8 +24,8 @@ brew upgrade
 
 # Install the Homebrew packages I use on a day-to-day basis.
 #
-# - Languages: rvm (Ruby), nvm (Node.js), go
-# - Databases: Progres, MySQL, Redis, Mongo, Elasticsearch
+# - Languages: Node.js, go
+# - Databases: Postgres, MySQL, Redis, Mongo, Elasticsearch
 # - Servers: Apache, Nginx
 # - Fuck (https://github.com/nvbn/thefuck): Correct your previous command. Note
 #   that this needs to be added to zsh or bash. See the project README.
@@ -45,8 +46,6 @@ brew upgrade
 apps=(
     apg
     node
-    ansible
-    bash-completion2
     coreutils
     moreutils
     findutils
@@ -54,12 +53,12 @@ apps=(
     mtr
     autojump
     imagemagick
-    source-highlight
     tree
     ffmpeg
     wget
     wifi-password
     diff-so-fancy
+    git
 )
 
 brew install "${apps[@]}"

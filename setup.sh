@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # https://github.com/kaicataldo/dotfiles/blob/master/bin/install.sh
 
@@ -159,14 +159,6 @@ echo "done"
 #
 # Actual symlink stuff
 #
-
-
-# Atom editor settings
-echo -n "Copying Atom settings.."
-mv -f ~/.atom ~/dotfiles_old/
-ln -s $HOME/dotfiles/atom ~/.atom
-echo "done"
-
 
 declare -a FILES_TO_SYMLINK=(
 

@@ -161,7 +161,10 @@ chflags nohidden ~/Library
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
 defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
 
-# Always open everything in Finder's column view. This is important.
+# Always open everything in Finder's list view. This is important.
+# Nlsv - List View
+# clmv - Column View
+# glyv - Gallery View
 defaults write com.apple.Finder FXPreferredViewStyle Nlsv
 
 # Show hidden files and file extensions by default

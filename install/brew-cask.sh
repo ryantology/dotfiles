@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Add alternate version casks
-brew tap homebrew/cask-versions
-brew tap homebrew/cask-drivers
-
 # Install packages
 apps=(
     dropbox
@@ -12,9 +8,7 @@ apps=(
     firefox
     google-chrome
     google-drive
-    opera
     spotify
-    skype
     slack
     discord
     zoom
@@ -23,15 +17,12 @@ apps=(
     sonos
     sonos-s1-controller
     insomnia
-    monodraw
-    sequel-pro
     tableplus
-    sketch
-    backblaze
-    sublime-text
     microsoft-office
     visual-studio-code
     whatsapp
+    windsurf
+    obsidian
 )
 
 brew install "${apps[@]}"
