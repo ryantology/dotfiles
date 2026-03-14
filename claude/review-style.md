@@ -1,6 +1,6 @@
 # Ryan's Code Review Style Profile
 
-> Generated from 1,172 PR review entries (710 substantive) across `lootmarket/rivalry` and `lootmarket/edge`, spanning Feb 2023 - Aug 2025.
+> Generated from 1,172 PR review entries (710 substantive) spanning Feb 2023 - Aug 2025.
 
 ## Overview
 

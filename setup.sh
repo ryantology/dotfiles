@@ -20,6 +20,30 @@ print_success() {
   printf "\e[0;32m  [ok] $1\e[0m\n"
 }
 
+dir_backup=~/dotfiles_old
+
+# Symlink a file, backing up any existing non-symlink target
+symlink() {
+  local source="$1"
+  local target="$2"
+
+  # Ensure target directory exists
+  mkdir -p "$(dirname "$target")"
+
+  if [ -L "$target" ] && [ "$(readlink "$target")" = "$source" ]; then
+    print_success "$target (already linked)"
+  elif [ -e "$target" ] && [ ! -L "$target" ]; then
+    local backup_name=$(echo "$target" | sed "s|$HOME/||; s|/|-|g; s|^\.||")
+    mv "$target" "$dir_backup/$backup_name"
+    ln -fs "$source" "$target"
+    print_success "$target -> $source (backed up original)"
+  else
+    [ -L "$target" ] && rm "$target"
+    ln -fs "$source" "$target"
+    print_success "$target -> $source"
+  fi
+}
+
 # Warn user this script will overwrite current dotfiles
 while true; do
   read -p "Warning: this will overwrite your current dotfiles. Continue? [y/n] " yn
@@ -34,18 +58,18 @@ done
 DOTFILES_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 export DOTFILES_DIR
 
-dir_backup=~/dotfiles_old
-
 # Create backup directory
 echo -n "Creating $dir_backup for backup of any existing dotfiles in ~..."
 mkdir -p $dir_backup
 echo "done"
 
 #
-# Files to symlink
+# Dotfiles -> ~/.dotfile (dot-prefixed in home directory)
 #
 
-declare -a FILES_TO_SYMLINK=(
+print_info "Symlinking dotfiles"
+
+declare -a DOTFILES=(
   'shell/shell_aliases'
   'shell/shell_config'
   'shell/shell_exports'
@@ -63,94 +87,42 @@ declare -a FILES_TO_SYMLINK=(
   'git/gitignore'
 )
 
-# Back up existing dotfiles
-for i in ${FILES_TO_SYMLINK[@]}; do
-  target="$HOME/.${i##*/}"
-  if [ -e "$target" ] && [ ! -L "$target" ]; then
-    echo "Backing up $target to $dir_backup/"
-    mv "$target" "$dir_backup/"
-  fi
+for i in ${DOTFILES[@]}; do
+  symlink "$DOTFILES_DIR/$i" "$HOME/.${i##*/}"
 done
 
-# Create symlinks
-print_info "Creating symlinks"
+#
+# App configs -> specific locations
+#
 
-for i in ${FILES_TO_SYMLINK[@]}; do
-  sourceFile="$DOTFILES_DIR/$i"
-  targetFile="$HOME/.$(printf "%s" "$i" | sed "s/.*\/\(.*\)/\1/g")"
+print_info "Symlinking app configs"
 
-  if [ -L "$targetFile" ] && [ "$(readlink "$targetFile")" == "$sourceFile" ]; then
-    print_success "$targetFile -> $sourceFile (already linked)"
-  elif [ -e "$targetFile" ]; then
-    read -p "'$targetFile' already exists, overwrite? (y/n) " -n 1 yn
-    printf "\n"
-    if [[ "$yn" =~ ^[Yy]$ ]]; then
-      rm -rf "$targetFile"
-      ln -fs "$sourceFile" "$targetFile"
-      print_success "$targetFile -> $sourceFile"
-    else
-      print_error "Skipped $targetFile"
-    fi
-  else
-    ln -fs "$sourceFile" "$targetFile"
-    print_success "$targetFile -> $sourceFile"
-  fi
-done
+# Ghostty
+symlink "$DOTFILES_DIR/ghostty/config" "$HOME/.config/ghostty/config"
 
-# Symlink Claude Code config
-print_info "Setting up Claude Code config"
-mkdir -p "$HOME/.claude/commands"
-
-claude_files=(
-  "settings.json"
-  "CLAUDE.md"
-  "review-style.md"
+# Claude Code
+declare -a CLAUDE_FILES=(
+  'settings.json'
+  'CLAUDE.md'
+  'review-style.md'
 )
 
-for f in ${claude_files[@]}; do
-  source_file="$DOTFILES_DIR/claude/$f"
-  target_file="$HOME/.claude/$f"
-  if [ -e "$target_file" ] && [ ! -L "$target_file" ]; then
-    mv "$target_file" "$dir_backup/claude-$f"
-  fi
-  ln -fs "$source_file" "$target_file"
-  print_success "$target_file -> $source_file"
+for f in ${CLAUDE_FILES[@]}; do
+  symlink "$DOTFILES_DIR/claude/$f" "$HOME/.claude/$f"
 done
 
-# Symlink Claude commands
-for cmd in "$DOTFILES_DIR/claude/commands/"*.md; do
-  cmd_name=$(basename "$cmd")
-  target_file="$HOME/.claude/commands/$cmd_name"
-  if [ -e "$target_file" ] && [ ! -L "$target_file" ]; then
-    mv "$target_file" "$dir_backup/claude-cmd-$cmd_name"
-  fi
-  ln -fs "$cmd" "$target_file"
-  print_success "$target_file -> $cmd"
-done
+symlink "$DOTFILES_DIR/claude/commands" "$HOME/.claude/commands"
 
-# Symlink Ghostty config
-print_info "Setting up Ghostty config"
-mkdir -p "$HOME/.config/ghostty"
-ghostty_source="$DOTFILES_DIR/ghostty/config"
-ghostty_target="$HOME/.config/ghostty/config"
-if [ -e "$ghostty_target" ] && [ ! -L "$ghostty_target" ]; then
-  mv "$ghostty_target" "$dir_backup/ghostty-config"
-fi
-ln -fs "$ghostty_source" "$ghostty_target"
-print_success "$ghostty_target -> $ghostty_source"
+#
+# Bin scripts
+#
 
-# Copy binaries
 print_info "Setting up bin scripts"
 ln -fs $DOTFILES_DIR/bin $HOME
 
-declare -a BINARIES=(
-  'crlf'
-  'git-delete-merged-branches'
-)
-
-for i in ${BINARIES[@]}; do
-  echo "Setting permissions for :: ${i##*/}"
-  chmod +rwx $HOME/bin/${i##*/}
+for i in crlf git-delete-merged-branches; do
+  chmod +rwx $HOME/bin/$i
+  print_success "$HOME/bin/$i (executable)"
 done
 
 #
@@ -193,5 +165,4 @@ install_zsh() {
 
 install_zsh
 
-# Reload zsh settings
 print_info "Setup complete! Restart your terminal or run: source ~/.zshrc"

@@ -23,32 +23,11 @@ cp ~/.zsh_history ~/migration/home 2>/dev/null
 cp ~/.gitconfig.local ~/migration
 
 ###############################################################################
-# XCode Command Line Tools                                                    #
-###############################################################################
-
-if ! xcode-select --print-path &> /dev/null; then
-  xcode-select --install &> /dev/null
-
-  # Wait until the XCode Command Line Tools are installed
-  until xcode-select --print-path &> /dev/null; do
-    sleep 5
-  done
-
-  echo "XCode Command Line Tools installed"
-fi
-
-###############################################################################
-# Homebrew                                                                    #
+# Homebrew (will install XCode Command Line Tools if needed)                  #
 ###############################################################################
 
 $HOME/dotfiles/install/brew.sh
 $HOME/dotfiles/install/brew-cask.sh
-
-###############################################################################
-# Node                                                                        #
-###############################################################################
-
-# $HOME/dotfiles/install/npm.sh
 
 ###############################################################################
 # OSX defaults                                                                #

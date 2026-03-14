@@ -30,8 +30,9 @@ zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
 
-# OMZ libs needed for theme and plugins
+# OMZ libs needed for theme, plugins, and completion
 zinit snippet OMZL::async_prompt.zsh
+zinit snippet OMZL::completion.zsh
 zinit snippet OMZL::git.zsh
 zinit snippet OMZL::theme-and-appearance.zsh
 zinit snippet OMZL::prompt_info_functions.zsh
@@ -50,6 +51,9 @@ zinit snippet OMZT::robbyrussell
 setopt correct                # command auto-correction
 setopt complete_in_word       # complete from both ends of a word
 setopt always_to_end          # move cursor to end after completion
+
+# Case-insensitive completion
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 # Show dots while waiting for completion
 expand-or-complete-with-dots() {
