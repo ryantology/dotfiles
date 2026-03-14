@@ -19,7 +19,8 @@ apps=(
     microsoft-office
     visual-studio-code
     whatsapp
-    windsurf
+    brave-browser
+    claude-code
     obsidian
 )
 
