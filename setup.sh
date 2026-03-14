@@ -97,6 +97,37 @@ for i in ${FILES_TO_SYMLINK[@]}; do
   fi
 done
 
+# Symlink Claude Code config
+print_info "Setting up Claude Code config"
+mkdir -p "$HOME/.claude/commands"
+
+claude_files=(
+  "settings.json"
+  "CLAUDE.md"
+  "review-style.md"
+)
+
+for f in ${claude_files[@]}; do
+  source_file="$DOTFILES_DIR/claude/$f"
+  target_file="$HOME/.claude/$f"
+  if [ -e "$target_file" ] && [ ! -L "$target_file" ]; then
+    mv "$target_file" "$dir_backup/claude-$f"
+  fi
+  ln -fs "$source_file" "$target_file"
+  print_success "$target_file -> $source_file"
+done
+
+# Symlink Claude commands
+for cmd in "$DOTFILES_DIR/claude/commands/"*.md; do
+  cmd_name=$(basename "$cmd")
+  target_file="$HOME/.claude/commands/$cmd_name"
+  if [ -e "$target_file" ] && [ ! -L "$target_file" ]; then
+    mv "$target_file" "$dir_backup/claude-cmd-$cmd_name"
+  fi
+  ln -fs "$cmd" "$target_file"
+  print_success "$target_file -> $cmd"
+done
+
 # Symlink Ghostty config
 print_info "Setting up Ghostty config"
 mkdir -p "$HOME/.config/ghostty"
