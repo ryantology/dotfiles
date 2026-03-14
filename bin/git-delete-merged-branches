@@ -1,6 +1,8 @@
 #!/bin/bash
 
-branches_to_die=$(git branch --no-color --merged origin/master | grep -v '\smaster$')
+default_branch=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@')
+default_branch=${default_branch:-main}
+branches_to_die=$(git branch --no-color --merged "origin/$default_branch" | grep -v "\s${default_branch}$")
 echo "Local branches to be deleted:"
 echo "$branches_to_die"
 
@@ -8,7 +10,7 @@ kill_branches () {
   echo $branches_to_die | xargs -n 1 git branch -d
 }
 
-remote_branches_to_die=$(git branch --no-color --remote --merged origin/master | grep -v '\smaster$' | grep -v '\/master$' | grep -v "origin\/HEAD" | grep -v "origin\/master")
+remote_branches_to_die=$(git branch --no-color --remote --merged "origin/$default_branch" | grep -v "\s${default_branch}$" | grep -v "\/${default_branch}$" | grep -v "origin\/HEAD" | grep -v "origin\/${default_branch}")
 echo "Remote branches to be deleted:"
 echo "$remote_branches_to_die"
 

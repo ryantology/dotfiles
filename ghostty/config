@@ -1,0 +1,17 @@
+# Ghostty terminal configuration
+# Symlinked to ~/.config/ghostty/config
+
+# Font
+font-size = 14
+
+# Window
+window-padding-x = 4
+window-padding-y = 4
+window-save-state = always
+
+# Clipboard
+clipboard-paste-protection = true
+copy-on-select = clipboard
+
+# Shell
+shell-integration = zsh

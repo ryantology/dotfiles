@@ -6,15 +6,19 @@
 sudo -v
 
 # Check for Homebrew and install it if missing
-if test ! $(which brew)
-then
+if ! command -v brew &> /dev/null; then
   echo "Installing Homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-# Add extra taps
-# This is the upstream maintained version of APG
-brew tap jzaleski/homebrew-jzaleski
+# Ensure Homebrew is in PATH
+# On Apple Silicon, brew installs to /opt/homebrew
+# On Intel, brew installs to /usr/local
+if [[ -f "/opt/homebrew/bin/brew" ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -f "/usr/local/bin/brew" ]]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
 
 # Make sure we’re using the latest Homebrew
 brew update
@@ -23,40 +27,24 @@ brew update
 brew upgrade
 
 # Install the Homebrew packages I use on a day-to-day basis.
-#
-# - Languages: Node.js, go
-# - Databases: Postgres, MySQL, Redis, Mongo, Elasticsearch
-# - Servers: Apache, Nginx
-# - Fuck (https://github.com/nvbn/thefuck): Correct your previous command. Note
-#   that this needs to be added to zsh or bash. See the project README.
-# - Foreman & Forego:
-# - Tree (http://mama.indstate.edu/users/ice/tree/): A directory listing utility
-#   that produces a depth indented listing of files.
-# - Tor ():
-# - git-extras (https://vimeo.com/45506445): Adds a shit ton of useful commands #   to git.
-# - autoenv (https://github.com/kennethreitz/autoenv): this utility makes it
-#   easy to apply environment variables to projects. I mostly use it for Go and
-#   Node.js projects. For Ruby projects, I just use Foreman or Forego.
-# - autojump (https://github.com/joelthelion/autojump): a faster way to navigate
-#   your filesystem.
-# Note that I install nvm (https://github.com/creationix/nvm) instead
-# of installing Node directly. This gives me more explicit control over
-# which version I'm using.
 
 apps=(
-    apg
+    bat
+    eza
     node
     coreutils
     moreutils
     findutils
-    fortune
-    mtr
-    autojump
+    fd
+    ripgrep
+    jq
+    gh
+    fzf
+    zoxide
     imagemagick
     tree
     ffmpeg
     wget
-    wifi-password
     diff-so-fancy
     git
 )

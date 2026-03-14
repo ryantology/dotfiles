@@ -5,18 +5,12 @@ export SHELL=/bin/zsh
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='vim'
+  export EDITOR='code --wait'
 fi
 
 # Prefer US English and use UTF-8
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US"
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# SSH
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
 
 # Don’t clear the screen after quitting a manual page
 export MANPAGER="less -X"
@@ -54,9 +48,3 @@ export PAGER='less'
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-
-# here's LS_COLORS
-# github.com/trapd00r/LS_COLORS
-# command -v gdircolors >/dev/null 2>&1 || alias gdircolors="dircolors"
-# eval "$(gdircolors -b ~/.dircolors)"
