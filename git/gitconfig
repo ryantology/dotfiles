@@ -7,8 +7,8 @@
         # Branch
         br = branch
         branch-name = rev-parse --abbrev-ref HEAD
-        branch-diff = diff master...HEAD
-        branch-files = "!git diff master...HEAD --name-status | sed '/^D/d ; s/^.\\s\\+//'"
+        branch-diff = diff main...HEAD
+        branch-files = "!git diff main...HEAD --name-status | sed '/^D/d ; s/^.\\s\\+//'"
 
         # Commit
         c = commit
@@ -41,13 +41,13 @@
 
         # Pull
         up = pull
-        plom = pull origin master
-        plum = pull upstream master
-        preb = !git fetch upstream && git rebase upstream/master
+        plom = pull origin main
+        plum = pull upstream main
+        preb = !git fetch upstream && git rebase upstream/main
 
         # Push
         p = push
-        pom = push origin master
+        pom = push origin main
         poh = push origin head
 
         # Stash
@@ -72,15 +72,6 @@
 
         # Submodules
         subpl = submodule update --init --recursive
-
-        # Git flow
-        new = !git pull origin develop && git flow feature start
-        done = !git pull origin develop && git flow feature finish "$(git symbolic-ref --short HEAD | sed -n 's/^feature\\///p')"
-        go = !git checkout $1 && pull
-        master = !git checkout master && pull
-        develop = !git checkout develop && pull
-        mmm = !git fetch origin master && git rebase origin/master
-        ddd = !git fetch origin develop && git rebase origin/develop
 
         # Misc
         publish = "!git push --set-upstream origin $(git branch-name)"
@@ -211,11 +202,6 @@
         # Correct typos
         autocorrect = 1
 
-# Any GitHub repo with my username should be checked out r/w by default
-# http://rentzsch.tumblr.com/post/564806957/public-but-hackable-git-submodules
-[url "git@github.com:nicksp/"]
-        insteadOf = "git://github.com/nicksp/"
-
 # Rewrites of repo paths
 [url "git@github.com:"]
         insteadOf = "gh:"
@@ -227,21 +213,13 @@
 [url "git://github.com/"]
         insteadOf = "github:"
 
-[url "git@gist.github.com:"]
-        insteadOf = "gst:"
-        pushInsteadOf = "gist:"
-        pushInsteadOf = "git://gist.github.com/"
-        pushInsteadOf = "https://gist.github.com/"
-
-[url "git://gist.github.com/"]
-        insteadOf = "gist:"
-
 # Push easily http://stackoverflow.com/a/23918418/89484
 [push]
         # Make `git push` automatically push relevant
         # annotated tags when pushing branches out
         followTags = true
-        default = current
+	default = simple
+	autoSetupRemote = true
 
 # Use separate file for username / github token / etc
 [include]
@@ -254,3 +232,5 @@
 
 [fetch]
         prune = true
+[init]
+	defaultBranch = main

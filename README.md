@@ -1,96 +1,67 @@
 # Dotfiles
 
-This is a collection of dotfiles and scripts I use for customizing OS X to my liking and setting up the software development tools I use on a day-to-day basis. They should be cloned to your home directory so that the path is `~/dotfiles/`.  The included setup script creates symlinks from your home directory to the files which are located in `~/dotfiles/`.
+Personal dotfiles for configuring macOS with Zsh and Homebrew.
 
-The setup script is smart enough to back up your existing dotfiles into a `~/dotfiles_old/` directory if you already have any dotfiles of the same name as the dotfile symlinks being created in your home directory.
+Originally based on [nicksp/dotfiles](https://github.com/nicksp/dotfiles), modernized for current macOS and tooling.
 
-I also prefer `zsh` as my shell of choice. As such, the setup script will also clone the `oh-my-zsh` repository from my GitHub. It then checks to see if `zsh` is installed. If `zsh` is installed, and it is not already configured as the default shell, the setup script will execute a `chsh -s $(which zsh)` command. This changes the default shell to zsh, and takes effect as soon as a new zsh is spawned or on next login.
+## What's included
 
-So, to recap, the install script will:
+- [Zsh config](shell/zshrc) with [zinit](https://github.com/zdharma-continuum/zinit) plugin manager
+- [Shell aliases](shell/shell_aliases) and [functions](shell/shell_functions)
+- [Git config](git/gitconfig) with aliases and diff-so-fancy
+- [Ghostty](ghostty/config) terminal configuration
+- [macOS defaults](osx/set-defaults.sh) for sensible system settings
+- [Homebrew](install/brew.sh) and [cask](install/brew-cask.sh) package lists
+- Handy [bin scripts](bin/)
 
-- back up any existing dotfiles in your home directory to `~/dotfiles_old/`
-- create symlinks to the dotfiles in `~/dotfiles/` in your home directory
-- clone the `oh-my-zsh` repository from my GitHub (for use with `zsh`)
-- check to see if `zsh` is installed, if it isn't, try to install it
-- if zsh is installed, run a `chsh -s` to set it as the default shell
+## Requirements
 
-## Features
-
-- Handy [binary scripts](bin/)
-- [Stop words](dict/) lists that I use with Marked 2
-- Git aliases
-- zsh aliases
-- Custom zsh theme with Git and battery status, etc: [nicktheme](zsh/themes/nick.zsh-theme)
-- Sensible [OS X defaults](osx/set-defaults.sh)
-- [Install script](setup.sh)
+- macOS (Apple Silicon or Intel)
+- Zsh (the install script will set it up)
 
 ## Installation
 
 ```sh
-$ git clone https://github.com/nicksp/dotfiles.git ~/dotfiles
-$ cd ~/dotfiles
-$ chmod +x setup.sh
-$ ./setup.sh
+git clone https://github.com/YOUR_USERNAME/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+chmod +x setup.sh
+./setup.sh
 ```
 
-## Remotely install using curl
-
-Alternatively, you can install this into `~/dotfiles` remotely without Git using curl:
+For a fresh machine, use the full setup guide:
 
 ```sh
-sh -c "`curl -fsSL https://raw.github.com/nicksp/dotfiles/master/remote-setup.sh`"
+# Copy and run sections from setup-new-machine.sh one at a time
+cat ~/dotfiles/setup-new-machine.sh
 ```
 
-Or, using wget:
+## Customization
 
-```sh
-sh -c "`wget -O - --no-check-certificate https://raw.githubusercontent.com/nicksp/dotfiles/master/remote-setup.sh`"
-```
+### Local overrides
 
-## Customize
+These files are gitignored and loaded automatically if present:
 
-### Local Settings
+- **`~/.zsh.local`** - Extra shell config, PATH additions, machine-specific settings
+- **`~/.gitconfig.local`** - Git user credentials and machine-specific git config:
 
-The dotfiles can be easily extended to suit additional local
-requirements by using the following files:
-
-#### `~/.zsh.local`
-
-If the `~/.zsh.local` file exists, it will be automatically sourced
-after all the other [shell related files](shell), thus, allowing its
-content to add to or overwrite the existing aliases, settings, PATH,
-etc.
-
-#### `~/.gitconfig.local`
-
-If the `~/.gitconfig.local` file exists, it will be automatically
-included after the configurations from [`~/.gitconfig`](git/gitconfig), thus, allowing
-its content to overwrite or add to the existing `git` configurations.
-
-**Note:** Use `~/.gitconfig.local` to store sensitive information such
-as the `git` user credentials, e.g.:
-
-```sh
+```ini
 [user]
-  name = Nick Plekhanov
-  email = nick@example.com
+  name = Your Name
+  email = you@example.com
 ```
 
-## OS X Defaults
+## Modern CLI tools
 
-My favorite part of this repo is the [set-defaults](osx/set-defaults.sh) script for OS X.
+The brew install includes modern replacements for common tools:
 
-## Resources
-
-I actively watch the following repositories and add the best changes to this repository:
-
-- [GitHub ❤ ~/](http://dotfiles.github.com/)
-- [Mathias’s dotfiles](https://github.com/mathiasbynens/dotfiles)
-- [Nicolas Gallagher’s dotfiles](https://github.com/necolas/dotfiles)
-- [Cătălin’s dotfiles](https://github.com/alrra/dotfiles)
-- [Paul's dotfiles](https://github.com/paulirish/dotfiles)
-- [Jacob Gillespie’s dotfiles](https://github.com/jacobwg/dotfiles)
+| Classic | Modern | Description |
+|---------|--------|-------------|
+| `cat` | `bat` | Syntax-highlighted file viewing |
+| `find` | `fd` | Faster, friendlier file finding |
+| `grep` | `ripgrep` (`rg`) | Faster recursive search |
+| `cd` | `zoxide` | Smart directory jumping (learns your habits) |
+| `ls` | `eza` | Modern file listing with git status |
 
 ## License
 
-The code is available under the [MIT license](LICENSE).
+[MIT](LICENSE)

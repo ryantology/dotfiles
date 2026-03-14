@@ -13,18 +13,15 @@
 #     ./node_modules/.bin/webpack --config webpack.local.config.js
 #
 
-if test ! $(which nvm)
-then
+# Load nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+if command -v nvm &> /dev/null; then
   echo "Installing a stable version of Node..."
-
-  # Install the latest stable version of node
-  nvm install stable
-
-  # Switch to the installed version
-  nvm use node
-
-  # Use the stable version of node by default
-  nvm alias default node
+  nvm install --lts
+  nvm use --lts
+  nvm alias default 'lts/*'
 fi
 
 # All `npm install <pkg>` commands will pin to the version that was available at the time you run the command
@@ -35,23 +32,12 @@ npm config set save-exact = true
 #
 # Some descriptions:
 #
-# diff-so-fancy — sexy git diffs
 # git-recent — Type `git recent` to see your recent local git branches
 # git-open — Type `git open` to open the GitHub page or website for a repository
 packages=(
-    diff-so-fancy
     git-recent
     git-open
-    gulp
-    http-server
-    servedir
-    flow-bin
-    flow-typed
     npm-check-updates
-    webpack
-    nodemon
-    svgo
-    yo
 )
 
 npm install -g "${packages[@]}"

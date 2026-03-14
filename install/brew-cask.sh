@@ -4,7 +4,6 @@
 apps=(
     dropbox
     1password
-    iterm2
     firefox
     google-chrome
     google-drive
@@ -15,8 +14,7 @@ apps=(
     tuple
     steam
     sonos
-    sonos-s1-controller
-    insomnia
+    ghostty
     tableplus
     microsoft-office
     visual-studio-code
@@ -26,6 +24,3 @@ apps=(
 )
 
 brew install "${apps[@]}"
-
-# Quick Look Plugins (https://github.com/sindresorhus/quick-look-plugins)
-#brew cask install qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv betterzipql qlimagesize webpquicklook
