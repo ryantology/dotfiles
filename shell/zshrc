@@ -30,9 +30,18 @@ zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
 
+# OMZ libs needed for theme and plugins
+zinit snippet OMZL::async_prompt.zsh
+zinit snippet OMZL::git.zsh
+zinit snippet OMZL::theme-and-appearance.zsh
+zinit snippet OMZL::prompt_info_functions.zsh
+
 # OMZ plugins via snippets
 zinit snippet OMZP::git
 zinit snippet OMZP::history
+
+# Prompt theme (robbyrussell - green arrow with git branch)
+zinit snippet OMZT::robbyrussell
 
 # ---------------------------------------------------------------------------
 # Zsh options (replaces OMZ ENABLE_CORRECTION / COMPLETION_WAITING_DOTS)
