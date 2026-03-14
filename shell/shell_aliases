@@ -67,7 +67,7 @@ alias la="ls -la ${colorflag}"
 alias lsd='gls -l | grep "^d"'
 
 # Modern cat replacement
-alias cat='bat --paging=never'
+alias cat='bat --paging=never --plain'
 
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
@@ -176,4 +176,4 @@ alias localrc="if [[ -a ~/.zsh.local ]]; then ${EDITOR} ~/.zsh.local; fi"
 alias brew_update="brew update; brew upgrade; brew cleanup; brew doctor"
 
 # Development stuff
-alias art=’php artisan’
+alias art='php artisan'

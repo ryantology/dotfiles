@@ -91,6 +91,19 @@ function extract() {
   fi
 }
 
+# Get Wi-Fi password for a network from Keychain
+# Usage: wifi-password [network name]
+# If no network name given, uses the current network
+wifi-password() {
+  local ssid="${1:-$(networksetup -getairportnetwork en0 | awk -F': ' '{print $2}')}"
+  if [ -z "$ssid" ]; then
+    echo "Not connected to Wi-Fi and no network name provided."
+    return 1
+  fi
+  security find-generic-password -wa "$ssid" -D "AirPort network password" 2>/dev/null || \
+    echo "Password not found for '$ssid'"
+}
+
 # `shellswitch [bash |zsh]`
 #   Must be in /etc/shells
 shellswitch () {

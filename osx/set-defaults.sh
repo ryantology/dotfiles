@@ -14,6 +14,18 @@ sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 ###############################################################################
+# Computer Name                                                               #
+###############################################################################
+
+read -p "Set computer name (leave blank to skip): " computer_name
+if [ -n "$computer_name" ]; then
+  sudo scutil --set ComputerName "$computer_name"
+  sudo scutil --set HostName "$computer_name"
+  sudo scutil --set LocalHostName "$(echo "$computer_name" | tr ' ' '-')"
+  echo "Computer name set to: $computer_name"
+fi
+
+###############################################################################
 # General UI/UX                                                               #
 ###############################################################################
 
@@ -44,12 +56,23 @@ defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
 # Disable smart quotes as they're annoying when typing code
 defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 
+# Fill window when double-clicking its title bar
+defaults write NSGlobalDomain AppleActionOnDoubleClick -string "Fill"
+
 ###############################################################################
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
 ###############################################################################
 
+# Enable full keyboard access for all controls
+# (e.g. enable Tab in modal dialogs)
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+
+# Disable press-and-hold for keys in favor of key repeat
+# defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+
 # Set a blazingly fast keyboard repeat rate
-defaults write NSGlobalDomain KeyRepeat -int 1
+defaults write NSGlobalDomain KeyRepeat -int 2
+# Set a shorter Delay until key repeat
 defaults write NSGlobalDomain InitialKeyRepeat -int 15
 
 ###############################################################################
@@ -94,6 +117,10 @@ defaults write com.apple.mail DisableInlineAttachmentViewing -bool true
 # Only use UTF-8 in Terminal.app
 defaults write com.apple.terminal StringEncodings -array 4
 
+# Enable Secure Keyboard Entry in Terminal.app
+# Prevents other apps from intercepting keystrokes
+defaults write com.apple.terminal SecureKeyboardEntry -bool true
+
 ###############################################################################
 # Photos                                                                      #
 ###############################################################################
@@ -131,8 +158,15 @@ defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 # Disable the warning when changing file extensions
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
-# Disable the warning before emptying the Trash
-defaults write com.apple.finder WarnOnEmptyTrash -bool false
+# Keep folders on top when sorting by name
+defaults write com.apple.finder _FXSortFoldersFirst -bool true
+
+# When performing a search, search the current folder by default
+defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+
+# Avoid creating .DS_Store files on network or USB volumes
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 
 # Finder: show status bar
 defaults write com.apple.finder ShowStatusBar -bool true
@@ -149,6 +183,61 @@ defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 
 # Show indicator lights for open applications in the Dock
 defaults write com.apple.dock show-process-indicators -bool true
+
+# Don't show recent applications in Dock
+defaults write com.apple.dock show-recents -bool false
+
+###############################################################################
+# Screen                                                                      #
+###############################################################################
+
+# Disable shadow in window screenshots
+# defaults write com.apple.screencapture disable-shadow -bool true
+
+# Show the mouse pointer in screenshots
+# defaults write com.apple.screencapture showsCursor -bool true
+
+###############################################################################
+# Safari                                                                      #
+###############################################################################
+
+# Show the full URL in the address bar
+# defaults write com.apple.Safari ShowFullURLInSmartSearchField -bool true
+
+###############################################################################
+# Security                                                                    #
+###############################################################################
+
+# Enable Firewall
+# sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on
+
+# Enable Stealth Mode (Mac doesn't respond to pings or port scans)
+# sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on
+
+###############################################################################
+# TextEdit                                                                    #
+###############################################################################
+
+# Use plain text mode for new TextEdit documents
+# defaults write com.apple.TextEdit RichText -int 0
+
+# Open and save files as UTF-8 in TextEdit
+# defaults write com.apple.TextEdit PlainTextEncoding -int 4
+# defaults write com.apple.TextEdit PlainTextEncodingForWrite -int 4
+
+###############################################################################
+# Activity Monitor                                                            #
+###############################################################################
+
+# Show all processes in Activity Monitor
+# defaults write com.apple.ActivityMonitor ShowCategory -int 100
+
+# Visualize CPU usage in the Activity Monitor Dock icon
+# defaults write com.apple.ActivityMonitor IconType -int 5
+
+# Sort Activity Monitor results by CPU usage
+# defaults write com.apple.ActivityMonitor SortColumn -string "CPUUsage"
+# defaults write com.apple.ActivityMonitor SortDirection -int 0
 
 ###############################################################################
 # Do some clean up work                                                       #

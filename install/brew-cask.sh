@@ -15,7 +15,10 @@ apps=(
     steam
     sonos
     ghostty
+    figma
+    linear-linear
     tableplus
+    telegram
     microsoft-office
     visual-studio-code
     whatsapp

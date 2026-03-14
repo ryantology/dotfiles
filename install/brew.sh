@@ -41,6 +41,9 @@ apps=(
     gh
     fzf
     zoxide
+    php
+    composer
+    pnpm
     imagemagick
     tree
     ffmpeg
