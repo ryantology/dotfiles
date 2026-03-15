@@ -185,6 +185,10 @@ defaults write com.apple.dock show-recents -bool false
 # Screen                                                                      #
 ###############################################################################
 
+# Save screenshots to ~/Documents/Screenshots
+mkdir -p "$HOME/Documents/Screenshots"
+defaults write com.apple.screencapture location -string "$HOME/Documents/Screenshots"
+
 # Disable shadow in window screenshots
 # defaults write com.apple.screencapture disable-shadow -bool true
 
