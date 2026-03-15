@@ -111,6 +111,10 @@ if command -v fzf &> /dev/null; then
   source <(fzf --zsh 2>/dev/null) || true
 fi
 
+# Initialize completion system and replay deferred compdef calls
+autoload -Uz compinit && compinit
+zinit cdreplay -q
+
 # ---------------------------------------------------------------------------
 # Local overrides
 # ---------------------------------------------------------------------------
