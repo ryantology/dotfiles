@@ -46,7 +46,7 @@ symlink() {
 
 # Warn user this script will overwrite current dotfiles
 while true; do
-  read -p "Warning: this will overwrite your current dotfiles. Continue? [y/n] " yn
+  read "yn?Warning: this will overwrite your current dotfiles. Continue? [y/n] "
   case $yn in
     [Yy]* ) break;;
     [Nn]* ) exit;;
