@@ -52,6 +52,10 @@ setopt correct                # command auto-correction
 setopt complete_in_word       # complete from both ends of a word
 setopt always_to_end          # move cursor to end after completion
 
+# Up/Down arrow searches history using whatever is already typed
+bindkey '^[[A' history-beginning-search-backward
+bindkey '^[[B' history-beginning-search-forward
+
 # Case-insensitive completion
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
