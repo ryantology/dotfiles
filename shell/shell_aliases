@@ -99,7 +99,7 @@ function git_list_branches() {
 # More Git tips http://firstaidgit.io/
 alias gss="git status -s"
 alias gp="git push"
-alias gpf="git push -f"
+alias gpf="git push --force-with-lease"
 alias gpt="git push origin HEAD && git push --tags"
 alias wip="git commit -m'WIP' . && git push origin HEAD"
 alias gl='git log'
@@ -122,7 +122,6 @@ alias gta='git tag -a -m'
 alias gf='git reflog' # allows you to see every step you have made with git allowing you to retract and reinstate your steps
 alias gap='git add -p' # step through each change, or hunk
 alias gsl='git shortlog -sn' # quickly get a list of contributors and see how many commits each person has
-alias gws='git diff --shortstat "@{0 day ago}"' # how many lines of code you have written today
 alias gwts='git ls-files | xargs wc -l' # count number of lines of code in a git project
 alias ggmp='git checkout -' # jump back to to your last branch
 alias gst='git stash' # stash git changes and put them into your list
